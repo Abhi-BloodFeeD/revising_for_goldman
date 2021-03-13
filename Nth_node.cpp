@@ -75,9 +75,37 @@ class LinkedList{
       cur->next = prev;
       prev = cur;
       cur = temp;
-      delete(temp);
+      //delete(temp);
     }
     head = prev;
+    return;
+  }
+  int length_list(){
+    Node* temp=head;
+    int score=0;
+    //1->2->2->3->3;
+    while(temp){
+      temp=temp->next;
+      score++;
+    }
+    return score;
+  }
+  bool add_next(int n,int d){
+    Node *temp =head;
+    while(temp && (temp->data)!=(n)){
+      temp = temp->next;
+    }
+    if(temp){
+      Node *rep = temp->next;
+      
+      Node *ptr = new Node;
+      ptr->data =d;
+      
+      temp->next = ptr;
+      ptr->next = rep;
+      return true;
+    }
+    return false;
   }
 };
 
@@ -90,8 +118,13 @@ int main() {
   //ptr.print_ll();
   LinkedList xyz = ptr;
   //xyz.print_ll();
-  xyz.reverse();
+  //xyz.reverse();
+  //cout<<xyz.length_list()<<"\n"<<endl;
+  xyz.add_next(3,5);
+  xyz.add_next(3,5);
+  xyz.add_next(3,5);
+  xyz.add_next(3,5);
+  xyz.add_next(5,6);
   xyz.print_ll();
-
 return 0; 
 } 
