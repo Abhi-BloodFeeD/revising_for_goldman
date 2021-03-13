@@ -107,7 +107,48 @@ class LinkedList{
     }
     return false;
   }
+  Node * giveHead(){
+    return head;
+  }
+  void reverse_recursive(Node*h){
+    if(!h) return;
+    reverse_recursive(h->next);
+    cout<<h->data<<endl;
+    return;
+  }
+
+  Node* reverse_batch(int size){
+  stack<Node*>st;
+  Node * temp = this->head;
+  Node* result=NULL;
+  while(temp){
+    int count = 0;
+    while(temp && count<size){
+      st.push(temp);
+      temp=temp->next;
+      count++;
+      }
+    while(!st.empty()){
+      if(!result){
+        result = st.top();
+        this->head = result;
+        st.pop();
+      }
+      else{
+        result->next = st.top();
+        result=result->next;  
+        st.pop();
+      }
+      }
+    }
+    result->next = NULL;
+    return head;
+  } 
 };
+//NULL->1->2->3->NULL//
+///   1    ///
+//NULL<-head , NULL<-temp//
+
 
 int main() {
   LinkedList ptr;
@@ -120,11 +161,11 @@ int main() {
   //xyz.print_ll();
   //xyz.reverse();
   //cout<<xyz.length_list()<<"\n"<<endl;
-  xyz.add_next(3,5);
-  xyz.add_next(3,5);
-  xyz.add_next(3,5);
-  xyz.add_next(3,5);
-  xyz.add_next(5,6);
+ 
   xyz.print_ll();
+  cout<<"--- \n";
+  xyz.reverse_batch(2);
+  xyz.print_ll();
+  
 return 0; 
 } 
