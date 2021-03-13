@@ -161,7 +161,6 @@ int main() {
   //xyz.print_ll();
   //xyz.reverse();
   //cout<<xyz.length_list()<<"\n"<<endl;
- 
   xyz.print_ll();
   cout<<"--- \n";
   xyz.reverse_batch(2);
