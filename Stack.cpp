@@ -5,7 +5,7 @@ using namespace std;
 #define ll long long
 #define ar array
 
-template <typename Object>
+template <class Object>
 class Stac_k{
   private:
     vector<Object> v;
