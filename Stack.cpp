@@ -22,42 +22,53 @@ class Stac_k{
       }
     }
     
-    void add(Object &&x){
-      this->v.push_back(move(x));
-      ++top;
-    }
-    void add(Object &x){
-      this->v.push_back(x);
-      ++top;
-    }
     void print(){
       int temp=this->top;
       while(temp>-1){
         cout<<this->v[temp--]<<" ";
       }
     }
+    bool isEmpty(){
+      if(this->v.size())return true;
+      else false;
+    }
+    //template(typename T)
+    void push(Object &x){
+      this->v.push_back(x);
+      ++top;
+    }
+    //template(typename T)
+    void push(Object &&x){
+      this->v.push_back(move(x));
+      ++top;
+    }
     
 };
 
-
+void print_break(){
+  cout<<"------\n";
+}
 int main() {
   Stac_k<int>st;
-  st.add(100);
-  st.add(200);
-  st.add(300);
-  st.add(400);
-  st.add(500);
-  //st.print();
+  st.push(100);
+  st.push(200);
+  st.push(300);
+  st.push(400);
+  st.push(500);
+  st.print();
+  print_break();
   Stac_k<int>tt = st;
-  //tt.print();
+  tt.print();
+  print_break();
   Stac_k<char>x;
   char a='x',b='y',c='z',d='y',e='x';
-  x.add(a);
-  x.add(b);
-  x.add(c);
-  x.add(d);
-  x.add(e);
+  x.push(a);
+  x.push(b);
+  x.push(c);
+  x.push(d);
+  x.push(e);
   x.print();
+  print_break();
   
 return 0; 
 } 
