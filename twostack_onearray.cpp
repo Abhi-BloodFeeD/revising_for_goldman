@@ -5,16 +5,28 @@ const int nxM = 1e3;
 template<class T>
 class Stack{
   private:
-    int size;
-    T v[nxM];
+    int size=nxM;
+    T *v;
     int top1,top2;
   public:
     // constructor 
     Stack(){
-      this->top1=-2;
-      this->top2=-1;
+      this->top1=-1;
+      this->top2=0;
+      v = new T[this->size];
     }
-    
+    Stack(int &n){
+      this->top1=-1;
+      this->top2=0;
+      this->size=n;
+      v = new T[this->size];
+    }
+    Stack(int &&n){
+      this->top1=-1;
+      this->top2=0;
+      this->size=move(n);
+      v = new T[this->size];
+    }
     void push1(T &x){
       this->top1+=2;
       this->v[top1]=x;
@@ -59,9 +71,7 @@ class Stack{
           top2-=2;
         }
       }
-    }
-
-   
+    } 
 };
 int main() {
   Stack<int> s;
