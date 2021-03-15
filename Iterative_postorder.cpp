@@ -73,3 +73,11 @@ int main() {
   print_recursive(st.top(),st);
 return 0; 
 } 
+
+// //                       4
+//                         / \
+//                       2   5
+//                       / \   \
+//                      1   3   7
+//                               \
+//                                8
