@@ -5,7 +5,7 @@ struct Node{
   int data;
   Node* left;
   Node* right;
-
+  Node (){};
   Node(int data){
     this->data = data;
   }
@@ -19,26 +19,26 @@ class BST{
       root=NULL;
     }
     void insert(int data){
-      Node* temp = root;
+      
+      if(!this->root){
+        this->root =  new Node(data);
+        return;  
+      }
+      
+      Node* temp = this->root;
       Node* follow = NULL;
       while(temp){
+        follow = temp;
         if(data < temp->data) 
-        {
-          follow = temp;
           temp = temp->left;    
-        }
-        else {
-          follow = temp;
+        else 
           temp = temp->right; 
-        }
       }
-      if(follow->data<data)
+      
+      if(data<follow->data)
         follow->left = new Node(data);
       else  
         follow->right = new Node(data); 
-      
-      
-      
      }//insert end;
     Node* getRoot(){return root;}
 };
@@ -47,11 +47,15 @@ void print_recursive(Node* root,stack<Node*> &st){
   if(!root)return;
   
   st.push(root->left);
+  Node* temp1 = st.top();st.pop();
+  print_recursive(temp1,st);
+
   st.push(root->right);
+  Node* temp2 = st.top();st.pop() ;
+  print_recursive(temp2,st);
+  
   cout<<root->data<<endl;
 
-
-  
 }
 
 
@@ -66,8 +70,6 @@ int main() {
   bst.insert(7);
   bst.insert(8);
   st.push(bst.getRoot());
-  while(!st.empty()){
-    st.push(left)
-  }
+  print_recursive(st.top(),st);
 return 0; 
 } 
