@@ -57,9 +57,9 @@ q.push(1200);
 q.push(1300);
 q.push(1400);
 q.push(1500);
-q.print();  
 if(!q.empty())
   cout<<"NOT-EMPTY\n";
+q.print();  
 return 0; 
 } 
 
