@@ -1,110 +1,69 @@
-
-// A C++ program to print topological
-// sorting of a DAG
-#include <iostream>
-#include <list>
-#include <stack>
-using namespace std;
- 
-// Class to represent a graph
-class Graph {
-    // No. of vertices'
-    int V;
- 
-    // Pointer to an array containing adjacency listsList
-    list<int>* adj;
- 
-    // A function used by topologicalSort
-    void topologicalSortUtil(int v, bool visited[],
-                             stack<int>& Stack);
- 
-public:
-    // Constructor
-    Graph(int V);
- 
-    // function to add an edge to graph
-    void addEdge(int v, int w);
- 
-    // prints a Topological Sort of
-    // the complete graph
-    void topologicalSort();
-};
- 
-Graph::Graph(int V)
-{
-    this->V = V;
-    adj = new list<int>[V];
-}
- 
-void Graph::addEdge(int v, int w)
-{
-    // Add w to v’s list.
-    adj[v].push_back(w);
-}
- 
-// A recursive function used by topologicalSort
-void Graph::topologicalSortUtil(int v, bool visited[],
-                                stack<int>& Stack)
-{
-    // Mark the current node as visited.
-    visited[v] = true;
- 
-    // Recur for all the vertices
-    // adjacent to this vertex
-    list<int>::iterator i;
-    for (i = adj[v].begin(); i != adj[v].end(); ++i)
-        if (!visited[*i])
-            topologicalSortUtil(*i, visited, Stack);
- 
-    // Push current vertex to stack
-    // which stores result
-    Stack.push(v);
-}
- 
-// The function to do Topological Sort.
-// It uses recursive topologicalSortUtil()
-void Graph::topologicalSort()
-{
-    stack<int> Stack;
- 
-    // Mark all the vertices as not visited
-    bool* visited = new bool[V];
-    for (int i = 0; i < V; i++)
-        visited[i] = false;
- 
-    // Call the recursive helper function
-    // to store Topological
-    // Sort starting from all
-    // vertices one by one
-    for (int i = 0; i < V; i++)
-        if (visited[i] == false)
-            topologicalSortUtil(i, visited, Stack);
- 
-    // Print contents of stack
-    while (Stack.empty() == false) {
-        cout << Stack.top() << " ";
-        Stack.pop();
-    }
-}
- 
-// Driver Code
-int main()
-{
-    // Create a graph given in the above diagram
-    Graph G(8);
-  G.addEdge(0,1);
-  G.addEdge(0,2);
-  G.addEdge(0,3);
-  G.addEdge(3,4);
-  G.addEdge(3,5);
-  G.addEdge(2,6);
-  G.addEdge(2,7);
- 
-    cout << "Following is a Topological Sort of the given "
-            "graph \n";
- 
-    // Function Call
-    G.topologicalSort();
- 
-    return 0;
-}
+// A C++ program for Prim's Minimum  
+// Spanning Tree (MST) algorithm. The program is  
+// for adjacency matrix representation of the graph  
+#include <bits/stdc++.h> 
+using namespace std; 
+  
+#define V 4  
+int minKey(int key[], bool mstSet[])  
+{  
+    int min = INT_MAX, min_index;  
+  
+    for (int v = 0; v < V; v++)  
+        if (mstSet[v] == false && key[v] < min)  
+            min = key[v], min_index = v;  
+  
+    return min_index;  
+}  
+void printMST(int parent[], int graph[V][V])  
+{  
+    cout<<"Edge \tWeight\n";  
+    for (int i =1; i < V; i++)  
+        cout<<parent[i]<<" - "<<i<<" \t"<<graph[i][parent[i]]<<" \n";  
+}  
+void primMST(int graph[V][V])  
+{  
+    int parent[V];  
+    int key[V];  
+    bool mstSet[V];  
+    for (int i = 0; i < V; i++)  
+        key[i] = INT_MAX, mstSet[i] = false;  
+  
+    key[0] = 0;  
+    parent[0] = -1; // First node is always root of MST  
+  
+    for (int count = 0; count < V - 1; count++) 
+    {  
+        int u = minKey(key, mstSet);  
+        mstSet[u] = true;  
+  
+        for (int v = 0; v < V; v++)  
+  
+            if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v])  
+                parent[v] = u, key[v] = graph[u][v];  
+    }  
+  
+    printMST(parent, graph);  
+}  
+  
+// Driver code 
+int main()  
+{  
+    /* Let us create the following graph  
+        2 3  
+    (0)--(1)--(2)  
+    | / \ |  
+    6| 8/ \5 |7  
+    | / \ |  
+    (3)-------(4)  
+            9     */
+    int graph[V][V] = { { 0, 2, 2, 0  },  
+                        { 2, 0, 3, 2 },  
+                        { 2, 3, 0, 0 },  
+                        { 0, 2, 0, 0 }};  
+  
+    // Print the solution  
+    primMST(graph);  
+  
+    return 0;  
+}  
