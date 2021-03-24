@@ -29,8 +29,8 @@ int main() {
   //            4-----------8
 vector<pair<int,int>>v;
 v.pb({1,4});
-v.pb({2,3});
-v.pb({1,5});
+v.pb({4,5});
+v.pb({1,3});
 v.pb({4,8});
 vector<pair<int,int>>result;
 max_activity(v,result);

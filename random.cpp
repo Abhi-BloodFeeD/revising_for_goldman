@@ -4,66 +4,52 @@
 #include <bits/stdc++.h> 
 using namespace std; 
   
-#define V 4  
-int minKey(int key[], bool mstSet[])  
-{  
-    int min = INT_MAX, min_index;  
+    double findMedianSortedArrays(vector<int>&nums1, vector<int>&nums2) {
+        
+        if(nums1.size()>nums2.size())return findMedianSortedArrays(nums2,nums1);
+        
+        int x = nums1.size();
+        int y = nums2.size();
+        
+        int start = 0;
+        int end = x;
+        
+        while(start<=end){
+         
+            int partitionX = (start+end)/2;
+            int partitionY = (x+y+1)/2 - partitionX;
+         
+            int leftMaxX = (partitionX==0)?INT_MIN:nums1[partitionX-1];
+            int RightMinX = (partitionY==x)?INT_MAX:nums1[partitionX];
+            
+            int leftMaxY = (partitionY==0)?INT_MIN:nums2[partitionY-1];
+            int RightMinY = (partitionY==y)?INT_MAX:nums2[partitionY];
+            
+            if(leftMaxY<=RightMinX && leftMaxX<=RightMinY){
+                if((x+y)%2!=0) return (double)max(leftMaxX,leftMaxY);
+                return (double)(max(leftMaxX,leftMaxY)+min(RightMinX,RightMinY))/2;    
+            }
+            
+            else if(leftMaxY>RightMinX ){
+                start=partitionX+1;
+            }
+            else{
+                end=partitionX-1;
+            }
+            
+        }
+        return -1;
+    }
   
-    for (int v = 0; v < V; v++)  
-        if (mstSet[v] == false && key[v] < min)  
-            min = key[v], min_index = v;  
-  
-    return min_index;  
-}  
-void printMST(int parent[], int graph[V][V])  
-{  
-    cout<<"Edge \tWeight\n";  
-    for (int i =1; i < V; i++)  
-        cout<<parent[i]<<" - "<<i<<" \t"<<graph[i][parent[i]]<<" \n";  
-}  
-void primMST(int graph[V][V])  
-{  
-    int parent[V];  
-    int key[V];  
-    bool mstSet[V];  
-    for (int i = 0; i < V; i++)  
-        key[i] = INT_MAX, mstSet[i] = false;  
-  
-    key[0] = 0;  
-    parent[0] = -1; // First node is always root of MST  
-  
-    for (int count = 0; count < V - 1; count++) 
-    {  
-        int u = minKey(key, mstSet);  
-        mstSet[u] = true;  
-  
-        for (int v = 0; v < V; v++)  
-  
-            if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v])  
-                parent[v] = u, key[v] = graph[u][v];  
-    }  
-  
-    printMST(parent, graph);  
-}  
-  
-// Driver code 
 int main()  
-{  
-    /* Let us create the following graph  
-        2 3  
-    (0)--(1)--(2)  
-    | / \ |  
-    6| 8/ \5 |7  
-    | / \ |  
-    (3)-------(4)  
-            9     */
-    int graph[V][V] = { { 0, 2, 2, 0  },  
-                        { 2, 0, 3, 2 },  
-                        { 2, 3, 0, 0 },  
-                        { 0, 2, 0, 0 }};  
+{ 
+
+    //112233 4 456789
+    vector<int> nums1  = {1,2,2,5};
+    vector<int> nums2  = {1,7,8,9};
+    cout<<findMedianSortedArrays(nums1,nums2);
   
-    // Print the solution  
-    primMST(graph);  
+  
   
     return 0;  
 }  
